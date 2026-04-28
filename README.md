@@ -1,4 +1,4 @@
- <p align="center">
+<p align="center">
   <img width="300" src="infobairrologo.png" alt="InfoBairro Logo" />
   
 </p>
@@ -20,7 +20,7 @@
 
 ## 📝 1. Descrição do Projeto
 
-O **InfoBairro** é uma plataforma Web Georreferenciada desenvolvida para empoderar os moradores de Camaçari. Através de um mapa interativo, a comunidade pode avaliar a infraestrutura (segurança, limpeza, mobilidade) de seus bairros, gerando dados reais que combatem a falta de informações atualizadas em canais oficiais.
+O **InfoBairro** é uma plataforma Web Georreferenciada desenvolvida para empoderar os moradores. Através de um mapa interativo, a comunidade pode avaliar a infraestrutura (segurança, limpeza, mobilidade) de seus bairros, gerando dados reais que combatem a falta de informações atualizadas em canais oficiais.
 
 ---
 
@@ -48,27 +48,35 @@ O **InfoBairro** é uma plataforma Web Georreferenciada desenvolvida para empode
 
 A estrutura do banco de dados é responsável por organizar as informações do sistema 
 e permitir que eles se relacionam de de forma eficiente. A seguir, é apresentada a organização 
-e a relação entre suas informações.
+e a relação entre s informações. 
 
-  ### 💡 Visão geral
+<br> 
+
+  ### 💡 4.1 Visão geral
   O banco de dados do InfoBairro segue o modelo relacional, onde as informações são organizadas em tabelas conectadas entre si.
 
   Exemplificação:
   - Cidades -> agrupam bairros 
   - Bairros -> possuem informações e indicadores gerais
-  - Avaliações -> representam a opinião dos usuários sobre os bairros 
+  - Avaliações -> representam a opinião dos urios sobre os bairros
 
-  ### 🧠 Analogia simples 
+
+<br> 
+
+  ### 🧠 4.2 Analogia simples 
   
 Funciona como um sistema de avaliações:
 
   - A cidade organiza os locais em uma região maior
   - Cada bairro representa um lugar que pode ser analisado
-  - As avaliações são as experiências e notas dadas pelo usuários
+  - As avaliações são as experiências e notas dadas pelo urios
 
 Com isso, o sistema consegue transformar opiniões individuais em uma visão geral sobre cada bairro.
 
-### 🪢 Relacionamentos (DER)
+
+<br> 
+
+  ### 🪢 4.3  Relacionamentos (DER)
 
 - Uma cidade possui vários bairros (1:N)
 - Um bairro pode ter várias avaliações (1:N)
@@ -76,7 +84,14 @@ Com isso, o sistema consegue transformar opiniões individuais em uma visão ger
 📌 Exemplo:
 
 ``` Cidade -> vários Bairros -> várias Avaliações ```
-### ⚠️ Observação importante (regra do sistema)
+
+<p align = "center"> 
+<img src = "DERphoto.png" width= "1000">
+</p>
+
+<br> 
+
+ ### ⚠️ 4.4 Observação importante (regra do sistema)
 
 As notas não ficam armazenadas prontas na tabela de bairros. Elas são calculadas dinamicamente no sistema (backend).
 
@@ -88,16 +103,18 @@ Isso acontece porque:
 ✔️ Ou seja:
 As notas são calculadas a partir da tabela de avaliações.
 
+
 ---
+
 ## 🚀 5. Implantação do Banco de Dados
 
 A implantação do banco de dados do **InfoBairro** é realizada de forma automatizada através do **Entity Framework Core**, garantindo que o ambiente possa ser reproduzido do zero em uma máquina limpa.
 
 O sistema utiliza **migrações automáticas** e, ao iniciar a aplicação, verifica se o banco já existe. Caso não exista, ele é criado automaticamente, juntamente com todas as tabelas e dados iniciais necessários.
 
----
+<br> 
 
-### 📌 Pré-requisitos
+### 📌 5.2 Pré-requisitos
 
 Antes da implantação, é necessário ter instalado:
 
@@ -112,32 +129,31 @@ Para instalar a CLI:
 dotnet tool install --global dotnet-ef
 ```
 
----
 
-### 🔹 Passo 1: Clonar o repositório
+
+ #### 🔹 Passo 1: Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-repositorio/InfoBairro.git
+git clone <https://github.com/seu-repositorio/InfoBairro.git>
 cd InfoBairro
 ```
 
----
 
-### 🔹 Passo 2: Configurar a conexão com o banco
+ #### 🔹 Passo 2: Configurar a conexão com o banco
 
 No arquivo `appsettings.json`, preencher a chave `DefaultConnection`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "server=localhost;database=infobairro;user=root;password=sua_senha;port=3306"
+  "DefaultConnection": "server=localhost;database=infobairro;user=root;password=senha;port=3306"
 }
 ```
 
 > 💡 Em ambiente de produção, recomenda-se utilizar variáveis de ambiente para proteger as credenciais.
+> 
 
----
 
-### 🔹 Passo 3: Executar a aplicação
+ #### 🔹 Passo 3: Executar a aplicação
 
 ```bash
 dotnet run
@@ -156,9 +172,8 @@ Esse processo realiza:
 - aplicação das migrations pendentes
 - atualização da estrutura do schema
 
----
 
-### 🔹 Passo 4: Seed inicial do sistema
+ #### 🔹 Passo 4: Seed inicial do sistema
 
 Após a criação do banco, o sistema executa a carga inicial de dados obrigatórios:
 
@@ -175,9 +190,10 @@ São criados automaticamente:
 
 Isso garante que o ambiente esteja pronto para uso logo após a primeira execução.
 
----
 
-### ✅ Validação pós-implantação
+<br> 
+
+ ### ✅ 5.3  Validação pós-implantação
 
 Após a inicialização, validar se as tabelas foram criadas corretamente:
 
@@ -197,9 +213,10 @@ Resultado esperado (exemplo):
 
 Também é recomendado validar a existência do usuário master e das roles iniciais.
 
----
 
-### 🔍 Teste de funcionamento
+<br> 
+
+ ### 🔍 5.4 Teste de funcionamento
 
 Executar consultas simples para validar a integridade:
 
@@ -209,27 +226,27 @@ SELECT * FROM bairros;
 SELECT * FROM aspnetroles;
 ```
 
----
+<br> 
 
-### 🔄 Rollback / Limpeza
+ ### 🔄 5.5  Rollback / Limpeza
 
 Caso seja necessário desfazer a implantação:
 
-#### Voltar para migration anterior
+### Voltar para migration anterior
 
 ```bash
 dotnet ef database update NomeMigrationAnterior
 ```
 
-#### Remover banco completamente
+ ### 🗑️ 5.7 Remover banco completamente
 
 ```sql
 DROP DATABASE infobairro;
 ```
 
----
+<br> 
 
-### 🛡️ Observação técnica
+ ### 🛡️ 5.6 Observação técnica
 
 O sistema utiliza:
 
@@ -249,9 +266,10 @@ Após a implantação do banco de dados, foi realizado um processo de validaçã
 
 Essa etapa é fundamental para assegurar que o ambiente está pronto para uso e que a aplicação consegue persistir e consultar informações sem inconsistências.
 
----
 
-### 🗄️ 6.1 Validação da Estrutura do Banco
+<br> 
+
+ ### 🗄️ 6.1 Validação da Estrutura do Banco
 
 A primeira etapa consiste em verificar se todas as tabelas foram criadas com sucesso após a execução das migrations automáticas.
 
@@ -261,7 +279,7 @@ Execute no MySQL / MariaDB:
 SHOW TABLES;
 ```
 
-### 📌 Resultado esperado
+ ### 📌 6.2 Resultado esperado
 
 O banco deve conter, no mínimo, as seguintes tabelas principais:
 
@@ -275,11 +293,13 @@ O banco deve conter, no mínimo, as seguintes tabelas principais:
 - `aspnetroles`
 - `aspnetuserroles`
 
-> 💡 As tabelas `aspnet*` são geradas automaticamente pelo **ASP.NET Identity**, responsável pelo sistema de autenticação e autorização.
+> 💡 As tabelas `aspnet*` são geradas automaticamente pelo [**ASP.NET](http://asp.net/) Identity**, responsável pelo sistema de autenticação e autorização.
+> 
 
----
 
-### 👤 6.2 Validação do Seed Inicial
+<br> 
+
+ ### 👤 6.3 Validação do Seed Inicial
 
 Durante a inicialização da aplicação, o sistema executa automaticamente a carga inicial de dados através dos métodos:
 
@@ -297,7 +317,7 @@ SELECT * FROM aspnetroles;
 SELECT * FROM aspnetusers;
 ```
 
-### 📌 Verificar
+ ### 📌 6.4 Verificar
 
 - existência dos perfis de acesso
 - existência do usuário administrador
@@ -309,9 +329,10 @@ Exemplo esperado:
 - `Moderador`
 - `Usuario`
 
----
 
-### 🔗 6.3 Validação de Integridade Referencial
+<br> 
+
+ ### 🔗 6.5 Validação de Integridade Referencial
 
 O banco utiliza **chaves estrangeiras e exclusão em cascata**, garantindo que os relacionamentos entre tabelas permaneçam consistentes.
 
@@ -324,7 +345,7 @@ SELECT * FROM avaliacoes;
 SELECT * FROM comentarios;
 ```
 
-### 📌 Conferir
+ ### 📌 6.6 Conferir
 
 - cada bairro deve possuir `CidadeId`
 - cada avaliação deve possuir `Idbairro` e `IdUser`
@@ -332,13 +353,14 @@ SELECT * FROM comentarios;
 
 Essa etapa confirma que os relacionamentos definidos no `Context.cs` foram aplicados corretamente.
 
----
 
-### 🌐 6.4 Validação Funcional da Aplicação
+<br> 
+
+ ### 🌐 6.7 Validação Funcional da Aplicação
 
 Após a validação estrutural, foram realizados testes diretamente na interface do sistema para comprovar a persistência dos dados.
 
-### 📌 Testes executados
+ ### 📌 6.8 Testes executados
 
 - cadastro de usuário
 - login e autenticação
@@ -356,9 +378,10 @@ SELECT * FROM avaliacoes;
 SELECT * FROM comentarios;
 ```
 
----
 
-### ⚡ 6.5 Validação de Regras de Negócio
+<br> 
+
+ ### ⚡ 6.9 Validação de Regras de Negócio
 
 Também foram validadas regras críticas implementadas no banco e na aplicação:
 
@@ -373,34 +396,40 @@ SELECT * FROM comentariolikes;
 ```
 
 > 💡 O sistema possui índice único para impedir múltiplos likes do mesmo usuário no mesmo comentário.
+> 
 
----
 
-### 🛡️ 6.7 Evidência de Teste
+
+<br> 
+
+ ### 🛡️ 6.10 Evidência de Teste
 
 A validação pós-implantação foi executada em ambiente local pela equipe após a aplicação automática das migrations, confirmando que o banco está funcional e pronto para uso no MVP.
 
-Todos os testes apresentaram resultado satisfatório.
 ---
 
 ## 🔄 7. Rollback / Limpeza do Banco de Dados
 
 O rollback do banco pode ser realizado por meio das **migrations versionadas do Entity Framework Core**, garantindo reversão segura para versões anteriores da estrutura.
 
-### ⏪ Reverter para migration anterior
+
+<br> 
+
+ ### ⏪ 7.1  Reverter para migration anterior
 
 ```bash
 dotnet ef migrations list
 dotnet ef database update NomeMigrationAnterior
 ```
 
-### 🗑️ Limpeza total
 
-```sql
-DROP DATABASE infobairro;
+<br>  
+
+
 ```
 
-### 💾 Backup Preventivo (Recomendado)
+
+ ### 💾 7.3 Backup Preventivo (Recomendado)
 
 Procedimento recomendado para backup preventivo:
 
@@ -413,30 +442,259 @@ Para restauração:
 ```bash
 mysql -u root -p infobairro < backup_infobairro.sql
 ```
+
+
+---
+Aqui está seu conteúdo organizado e padronizado em **Markdown limpo e consistente**, com hierarquia clara, espaçamento correto e blocos de código bem estruturados:
+
 ---
 
+## 🔄 7. Rollback / Limpeza do Banco de Dados
 
+O rollback do banco pode ser realizado por meio das **migrations versionadas do Entity Framework Core**, garantindo reversão segura para versões anteriores da estrutura.
+
+<br>
+
+### ⏪ 7.1 Reverter para migration anterior
+
+```bash
+dotnet ef migrations list
+dotnet ef database update NomeMigrationAnterior
+```
+
+<br>
+
+### 💾 7.2 Backup Preventivo (Recomendado)
+
+Procedimento recomendado para backup preventivo:
+
+```bash
+mysqldump -u root -p infobairro > backup_infobairro.sql
+```
+
+Para restauração:
+
+```bash
+mysql -u root -p infobairro < backup_infobairro.sql
+```
+
+---
+
+## 🖥️ 8. Requisitos do Servidor
+
+Antes de realizar o deploy, o servidor deve atender aos seguintes requisitos mínimos:
+
+### 🧩 Sistema Operacional
+
+* Windows Server com suporte a IIS
+  **ou**
+* Linux com suporte ao runtime/framework utilizado no projeto
+
+### ⚙️ Recursos mínimos recomendados
+
+* **Processador:** 2 vCPUs ou superior
+* **Memória RAM:** 4 GB mínimo
+* **Armazenamento:** 20 GB livres ou mais
+* **Rede:** acesso à internet para dependências e integração com GitHub
+
+### 📦 Dependências obrigatórias
+
+* IIS instalado e habilitado (Windows)
+* .NET Runtime / Hosting Bundle compatível
+* Banco de dados disponível e acessível
+* Git instalado no servidor
+* Permissão administrativa para configuração
+
+### ✅ Recomendações adicionais
+
+* Ambiente separado para produção
+* Logs habilitados
+* Backup antes de atualizações
+* Variáveis de ambiente para dados sensíveis
+
+---
+
+## 📁 9. Estrutura Esperada do Projeto
+
+Antes do deploy, o projeto deve conter:
+
+* Código fonte versionado no GitHub
+* Configuração separada por ambiente
+* Conexão com banco parametrizada
+* Build funcionando localmente
+* Dependências restauráveis
+
+---
+
+## 🚀 10. Passo a Passo do Deploy via GitHub
+
+### 🔧 10.1 Preparar o repositório
+
+* Enviar projeto para o GitHub
+* Garantir branch principal estável
+* Configurar `.gitignore` corretamente
+* **Não versionar dados sensíveis**, como:
+
+  * Strings de conexão
+  * Chaves de API
+  * Senhas
+  * Tokens
+
+---
+
+### 🖥️ 10.2 Preparar o servidor
+
+* Acessar com conta administrativa
+* Instalar dependências:
+
+  * IIS (Windows)
+  * Runtime do projeto
+  * Git / Web Deploy
+* Criar pasta da aplicação
+* Ajustar permissões
+
+---
+
+### ⚙️ 10.3 Configurar ambiente
+
+* Criar site no IIS (ou equivalente)
+* Definir diretório físico
+* Configurar pool de aplicação
+* Ajustar permissões
+* Configurar variáveis de ambiente
+
+---
+
+### 🔄 10.4 Configurar deploy
+
+#### 🔹 Opção A: GitHub Actions
+
+* Criar workflow
+* Pipeline deve:
+
+  * Restaurar pacotes
+  * Compilar
+  * Publicar
+  * Enviar ao servidor
+* Configurar **secrets**
+* Validar execução do deploy
+
+#### 🔹 Opção B: Deploy manual
+
+* Gerar publish
+* Enviar arquivos ao servidor
+* Substituir versão antiga
+* Reiniciar aplicação
+
+---
+
+### 🗄️ 10.5 Banco de dados
+
+* Configurar connection string
+* Executar migrations ou scripts
+* Validar estrutura e dados
+
+---
+
+### 🧪 10.6 Testes
+
+* Acessar sistema
+* Validar funcionalidades:
+
+  * Autenticação
+  * Cadastro
+  * Consulta
+  * Edição
+  * Exclusão
+* Verificar logs
+
+---
+
+## 🔄 11. Fluxo com GitHub Actions
+
+Fluxo recomendado:
+
+1. Commit no GitHub
+2. Pipeline executa build
+3. Deploy no servidor
+4. Aplicação reiniciada
+5. Sistema disponível
+
+---
+
+## 🧠 12. Boas Práticas
+
+* Não salvar segredos no código
+* Usar variáveis de ambiente
+* Manter backups
+* Registrar logs
+* Testar em homologação
+* Versionar corretamente
+* Ter plano de rollback
+
+---
+
+## ✅ 13. Checklist Final
+
+* [ ] Repositório atualizado
+* [ ] Runtime instalado
+* [ ] IIS configurado
+* [ ] Banco acessível
+* [ ] Connection string correta
+* [ ] Build sem erros
+* [ ] Deploy concluído
+* [ ] Aplicação acessível
+* [ ] Funcionalidades testadas
+
+---
+
+## ⚠️ 14. Observações Importantes
+
+* Em ambientes como AWS, pode envolver:
+
+  * EC2
+  * Security Groups
+  * Storage externo
+
+* Em servidores próprios:
+
+  * Processo semelhante
+  * Diferença na infraestrutura
+
+➡️ O mais importante é garantir que o ambiente final suporte a aplicação com **estabilidade e segurança**.
+
+---
+
+## 📈 15. Roadmap & Project Status
+
+*(Se quiser, posso te ajudar a montar essa parte também — com status, backlog, milestones, etc.)*
+
+---
 
 ## 📈 8. Roadmap & Project Status
 
 O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
 
-- [x] **Phase 1 (2025.1):** Design (Figma), Modelagem de Dados (Diagramas ER) e Proposta de Valor  
-- [x] **Phase 2 (2025.2):** Desenvolvimento do Core (Back-end, Front-end e Integração com DB)  
-- [ ] **Phase 3 (2026.1):** Refinamento de código, PM Canvas e preparação para o Pitch Final *(Status Atual 🛠️)*  
-- [ ] **Futuro:** Implementação de IA para análise de sentimento e Aplicativo Mobile nativo
+- [x]  **Phase 1 (2025.1):** Design (Figma), Modelagem de Dados (Diagramas ER) e Proposta de Valor
+- [x]  **Phase 2 (2025.2):** Desenvolvimento do Core (Back-end, Front-end e Integração com DB)
+- [ ]  **Phase 3 (2026.1):** PM Canvas, Plano de Projeto, Adição de bairros, Plano de Manutenção de Sistemas, EAP, Teste de Sistema, Dashboard, Correção de bugs no código, Correção do Pitch e Slide Final.  *(Status Atual 🛠️)*
+- [ ]  **Futuro:** Implementação de IA para análise de sentimento e Aplicativo Mobile nativo
 
- ---
+---
 
 ## 🌐 9. Disponibilidade e Acesso
 
 O **InfoBairro** é uma plataforma web de acesso público. Por se tratar de um sistema proprietário voltado à gestão urbana de Camaçari, o código-fonte reside em um repositório privado, enquanto a aplicação está disponível para uso da comunidade.
 
-### 🔗 Link de Acesso
-O sistema pode ser acessado através do link oficial:
-> **https://infobairro.runasp.net/**
+<br> 
 
-### 📱 Experiência do Usuário
+ ### 🔗9.1 Link de Acesso
+O sistema pode ser acessado através do link oficial:
+> **https://infobairro.com/**
+
+<br> 
+
+ ### 📱 9.2 Experiência do Usuário
 * **Web Responsiva:** Otimizado para navegadores Desktop e Mobile (Chrome, Edge, Safari).
 * **Sem Necessidade de Instalação:** Acesso direto via navegador, sem ocupar espaço no dispositivo.
 * **Mapa em Tempo Real:** Carregamento dinâmico de dados georreferenciados via infraestrutura Cloud.
@@ -452,12 +710,26 @@ Embora o código seja privado, a arquitetura de publicação segue padrões mode
 * **Banco de Dados:** Instância MariaDB dedicada para armazenamento seguro e anonimizado.
 * **Integração:** Pipeline de deploy automatizado para atualizações de melhorias (Roadmap 2026).
 
-  ---
-## 👥 11. Equipe e Engenharia de Software
+---
+
+## 🧱 11. Arquitetura de Software
+
+
+* **Padrão de arquitetura:** O sistema segue o padrao MVC com divisão clara de responsabilidades (Controllers, Models, Views).
+
+ * **Camada de Dados:** Utiliza o Entity Framework como ORM para acesso ao banco de dados e MySQL como SGBD.
+   
+ * **Autenticação:** ASP.NET Core Identity para controle de acesso, cadastro de usuarios, login e logout
+ 
+* **Front-end:** O sistema utiliza do Framework Bootstrap 5, a renderização das páginas é feita com a engine Razor, permitindo a criação de conteúdos dinâmicos integrados ao back-end, facilitando a exibição de dados e a interação com o usuário e JavaScript para interação no lado do cliente.
+
+---
+  
+## 👥 12. Equipe e Engenharia de Software
 
 O **InfoBairro** é o resultado da colaboração estratégica entre especialistas em diferentes frentes de desenvolvimento.
 
-### 🛠️ Core Team & Responsabilidades
+ ### 🛠️ Core Team & Responsabilidades
 
 | Membro | Role (Papel Técnico) | Especialidades no Projeto |
 | :--- | :--- | :--- |
@@ -467,7 +739,7 @@ O **InfoBairro** é o resultado da colaboração estratégica entre especialista
 | **Arthur Michelângelo** | **Data Architect & Documentation** | Modelagem e alimentação de banco de dados, documentação e frontend. |
 | **Leandro Rivas** | **Full Stack Developer & Designer** | Desenvolvimento de regras de negócio (Back), UI Design e Frontend. |
 
-### 🏛️ Parcerias e Apoio Técnico
+ ### 🏛️ Parcerias e Apoio Técnico
 * **SENAI Camaçari:** Suporte em infraestrutura de laboratórios e orientação acadêmica.
 * **Corpo Docente:** Mentoria técnica especializada em arquitetura .NET e Governança de Dados.
 
