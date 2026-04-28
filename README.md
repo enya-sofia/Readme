@@ -667,11 +667,9 @@ Fluxo recomendado:
 
 ## 📈 15. Roadmap & Project Status
 
-*(Se quiser, posso te ajudar a montar essa parte também — com status, backlog, milestones, etc.)*
-
 ---
 
-## 📈 8. Roadmap & Project Status
+## 📈 8. p & Project Status
 
 O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
 
