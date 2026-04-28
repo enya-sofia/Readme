@@ -48,7 +48,7 @@ O **InfoBairro** é uma plataforma Web Georreferenciada desenvolvida para empode
 
 A estrutura do banco de dados é responsável por organizar as informações do sistema 
 e permitir que eles se relacionam de de forma eficiente. A seguir, é apresentada a organização 
-e a relação entre s informações. 
+e a relação entre as informações. 
 
 <br> 
 
@@ -59,7 +59,6 @@ e a relação entre s informações.
   - Cidades -> agrupam bairros 
   - Bairros -> possuem informações e indicadores gerais
   - Avaliações -> representam a opinião dos urios sobre os bairros
-
 
 <br> 
 
@@ -73,21 +72,26 @@ Funciona como um sistema de avaliações:
 
 Com isso, o sistema consegue transformar opiniões individuais em uma visão geral sobre cada bairro.
 
-
 <br> 
 
   ### 🪢 4.3  Relacionamentos (DER)
+O modelo estabelece as seguintes relações entre as entidades:
 
-- Uma cidade possui vários bairros (1:N)
-- Um bairro pode ter várias avaliações (1:N)
+- Uma cidade pode possuir vários bairros (relação 1:N).
+- Um bairro pode conter diversas avaliações (relação 1:N).
 
-📌 Exemplo:
+Esse encadeamento permite estruturar os dados de forma hierárquica, partindo da cidade até as avaliações associadas a cada bairro.
+
+📌 Fluxo simplificado:
 
 ``` Cidade -> vários Bairros -> várias Avaliações ```
 
-<p align = "center"> 
+
+O Diagrama Entidade-Relacionamento (DER) apresentado abaixo ilustra essas conexões, além de detalhar as principais entidades, seus atributos e como elas se relacionam dentro do sistema.     
+
+<br> 
+
 <img src = "DERphoto.png" width= "1000">
-</p>
 
 <br> 
 
@@ -114,7 +118,7 @@ O sistema utiliza **migrações automáticas** e, ao iniciar a aplicação, veri
 
 <br> 
 
-### 📌 5.2 Pré-requisitos
+### 📌 5.1 Pré-requisitos
 
 Antes da implantação, é necessário ter instalado:
 
@@ -193,7 +197,7 @@ Isso garante que o ambiente esteja pronto para uso logo após a primeira execuç
 
 <br> 
 
- ### ✅ 5.3  Validação pós-implantação
+ ### ✅ 5.2 Validação pós-implantação
 
 Após a inicialização, validar se as tabelas foram criadas corretamente:
 
@@ -216,7 +220,7 @@ Também é recomendado validar a existência do usuário master e das roles inic
 
 <br> 
 
- ### 🔍 5.4 Teste de funcionamento
+ ### 🔍 5.3 Teste de funcionamento
 
 Executar consultas simples para validar a integridade:
 
@@ -228,7 +232,7 @@ SELECT * FROM aspnetroles;
 
 <br> 
 
- ### 🔄 5.5  Rollback / Limpeza
+ ### 🔄 5.4  Rollback / Limpeza
 
 Caso seja necessário desfazer a implantação:
 
@@ -238,7 +242,7 @@ Caso seja necessário desfazer a implantação:
 dotnet ef database update NomeMigrationAnterior
 ```
 
- ### 🗑️ 5.7 Remover banco completamente
+ ### 🗑️ 5.5 Remover banco completamente
 
 ```sql
 DROP DATABASE infobairro;
@@ -405,47 +409,6 @@ SELECT * FROM comentariolikes;
  ### 🛡️ 6.10 Evidência de Teste
 
 A validação pós-implantação foi executada em ambiente local pela equipe após a aplicação automática das migrations, confirmando que o banco está funcional e pronto para uso no MVP.
-
----
-
-## 🔄 7. Rollback / Limpeza do Banco de Dados
-
-O rollback do banco pode ser realizado por meio das **migrations versionadas do Entity Framework Core**, garantindo reversão segura para versões anteriores da estrutura.
-
-
-<br> 
-
- ### ⏪ 7.1  Reverter para migration anterior
-
-```bash
-dotnet ef migrations list
-dotnet ef database update NomeMigrationAnterior
-```
-
-
-<br>  
-
-
-```
-
-
- ### 💾 7.3 Backup Preventivo (Recomendado)
-
-Procedimento recomendado para backup preventivo:
-
-```bash
-mysqldump -u root -p infobairro > backup_infobairro.sql
-```
-
-Para restauração:
-
-```bash
-mysql -u root -p infobairro < backup_infobairro.sql
-```
-
-
----
-Aqui está seu conteúdo organizado e padronizado em **Markdown limpo e consistente**, com hierarquia clara, espaçamento correto e blocos de código bem estruturados:
 
 ---
 
@@ -665,11 +628,7 @@ Fluxo recomendado:
 
 ---
 
-## 📈 15. Roadmap & Project Status
-
----
-
-## 📈 8. p & Project Status
+## 📈 15. Roadmap & Project Status 
 
 O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
 
@@ -680,26 +639,26 @@ O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
 
 ---
 
-## 🌐 9. Disponibilidade e Acesso
+## 🌐 16. Disponibilidade e Acesso
 
 O **InfoBairro** é uma plataforma web de acesso público. Por se tratar de um sistema proprietário voltado à gestão urbana de Camaçari, o código-fonte reside em um repositório privado, enquanto a aplicação está disponível para uso da comunidade.
 
 <br> 
 
- ### 🔗9.1 Link de Acesso
+ ### 🔗16.1 Link de Acesso
 O sistema pode ser acessado através do link oficial:
 > **https://infobairro.com/**
 
 <br> 
 
- ### 📱 9.2 Experiência do Usuário
+ ### 📱 16.2 Experiência do Usuário
 * **Web Responsiva:** Otimizado para navegadores Desktop e Mobile (Chrome, Edge, Safari).
 * **Sem Necessidade de Instalação:** Acesso direto via navegador, sem ocupar espaço no dispositivo.
 * **Mapa em Tempo Real:** Carregamento dinâmico de dados georreferenciados via infraestrutura Cloud.
 
 ---
 
-## 🛠️ 10. Infraestrutura e Deployment (Bastidores)
+## 🛠️ 17. Infraestrutura e Deployment (Bastidores)
 
 Embora o código seja privado, a arquitetura de publicação segue padrões modernos de escalabilidade:
 
@@ -710,7 +669,7 @@ Embora o código seja privado, a arquitetura de publicação segue padrões mode
 
 ---
 
-## 🧱 11. Arquitetura de Software
+## 🧱 18. Arquitetura de Software
 
 
 * **Padrão de arquitetura:** O sistema segue o padrao MVC com divisão clara de responsabilidades (Controllers, Models, Views).
@@ -723,7 +682,7 @@ Embora o código seja privado, a arquitetura de publicação segue padrões mode
 
 ---
   
-## 👥 12. Equipe e Engenharia de Software
+## 👥 19. Equipe e Engenharia de Software
 
 O **InfoBairro** é o resultado da colaboração estratégica entre especialistas em diferentes frentes de desenvolvimento.
 
