@@ -239,6 +239,7 @@ Caso seja necessário desfazer a implantação:
 ```bash
 dotnet ef database update NomeMigrationAnterior
 ```
+---
 
  ### 🗑️ 5.5 Remover banco completamente
 
@@ -484,177 +485,231 @@ Antes do deploy, o projeto deve conter:
 * Dependências restauráveis
 
 ---
+## 🧱 10. Preparar o projeto (na sua máquina)
 
-## 🚀 10. Passo a Passo do Deploy via GitHub
+Abra o terminal na pasta do projeto.
 
-### 🔧 10.1 Preparar o repositório
+**▶️ Testar se está funcionando:**
 
-* Enviar projeto para o GitHub
-* Garantir branch principal estável
-* Configurar `.gitignore` corretamente
-* **Não versionar dados sensíveis**, como:
+``` bash
+dotnet run
+```
 
-  * Strings de conexão
-  * Chaves de API
-  * Senhas
-  * Tokens
-
----
-
-### 🖥️ 10.2 Preparar o servidor
-
-* Acessar com conta administrativa
-* Instalar dependências:
-
-  * IIS (Windows)
-  * Runtime do projeto
-  * Git / Web Deploy
-* Criar pasta da aplicação
-* Ajustar permissões
+**📦 Gerar versão de produção:**
+```bash
+dotnet publish -c Release -o ./publish
+```
+> 👉 Isso cria a pasta `publish/` com todos os arquivos necessários para a execução.
 
 ---
 
-### ⚙️ 10.3 Configurar ambiente
+## 📤 11. Subir para o GitHub
 
-* Criar site no IIS (ou equivalente)
-* Definir diretório físico
-* Configurar pool de aplicação
-* Ajustar permissões
-* Configurar variáveis de ambiente
+Se ainda não inicializou o repositório:
 
----
+```bash
+git init
+git add .
+git commit -m "primeiro commit"
+git branch -M main
+git remote add origin https://github.com/seu-usuario/seu-repo.git
+git push -u origin main
+```
 
-### 🔄 10.4 Configurar deploy
-
-#### 🔹 Opção A: GitHub Actions
-
-* Criar workflow
-* Pipeline deve:
-
-  * Restaurar pacotes
-  * Compilar
-  * Publicar
-  * Enviar ao servidor
-* Configurar **secrets**
-* Validar execução do deploy
-
-#### 🔹 Opção B: Deploy manual
-
-* Gerar publish
-* Enviar arquivos ao servidor
-* Substituir versão antiga
-* Reiniciar aplicação
+> **⚠️ IMPORTANTE:** Nunca suba o arquivo `appsettings.json` contendo senhas reais.
+> ✅ Use `appsettings.Production.json` ou **Variáveis de Ambiente**.
 
 ---
 
-### 🗄️ 10.5 Banco de dados
+## 🖥️ 12. Preparar o servidor (Windows + IIS)
 
-* Configurar connection string
-* Executar migrations ou scripts
-* Validar estrutura e dados
+### 12.1 Instalar IIS
+No Windows Server:
+1. Abrir **Server Manager**.
+2. Clicar em **Add Roles and Features**.
+3. Marcar: ✅ **Web Server (IIS)**.
+   
+---
+
+### 12.2 Instalar .NET Hosting Bundle
+Baixe e instale o pacote oficial da Microsoft:
+👉 [ASP.NET Core Hosting Bundle](https://dotnet.microsoft.com/download/dotnet)
+> *Isso permite que o IIS gerencie e execute aplicações .NET.*
 
 ---
 
-### 🧪 10.6 Testes
-
-* Acessar sistema
-* Validar funcionalidades:
-
-  * Autenticação
-  * Cadastro
-  * Consulta
-  * Edição
-  * Exclusão
-* Verificar logs
+### 12.3 Instalar Git
+👉 [Git for Windows](https://git-scm.com/)
 
 ---
 
-## 🔄 11. Fluxo com GitHub Actions
+## 📁 13. Criar pasta da aplicação no servidor
 
-Fluxo recomendado:
-
-1. Commit no GitHub
-2. Pipeline executa build
-3. Deploy no servidor
-4. Aplicação reiniciada
-5. Sistema disponível
+Crie um diretório para hospedar os arquivos, por exemplo:
+`C:\apps\meu-sistema`
 
 ---
 
-## 🧠 12. Boas Práticas
+## ⚙️ 14. Configurar o IIS
 
-* Não salvar segredos no código
-* Usar variáveis de ambiente
-* Manter backups
-* Registrar logs
-* Testar em homologação
-* Versionar corretamente
-* Ter plano de rollback
+### 14.1 Abrir IIS Manager
+Pressione `Win + R`, digite `inetmgr` e aperte Enter.
 
 ---
 
-## ✅ 13. Checklist Final
-
-* [ ] Repositório atualizado
-* [ ] Runtime instalado
-* [ ] IIS configurado
-* [ ] Banco acessível
-* [ ] Connection string correta
-* [ ] Build sem erros
-* [ ] Deploy concluído
-* [ ] Aplicação acessível
-* [ ] Funcionalidades testadas
+### 14.2 Criar Application Pool
+1. Vá em **Application Pools** > **Add Application Pool**.
+2. **Nome:** `MeuAppPool`
+3. **.NET CLR Version:** Escolha `No Managed Code`.
 
 ---
 
-## ⚠️ 14. Observações Importantes
-
-* Em ambientes como AWS, pode envolver:
-
-  * EC2
-  * Security Groups
-  * Storage externo
-
-* Em servidores próprios:
-
-  * Processo semelhante
-  * Diferença na infraestrutura
-
-➡️ O mais importante é garantir que o ambiente final suporte a aplicação com **estabilidade e segurança**.
+### 14.3 Criar Site
+1. Botão direito em **Sites** > **Add Website**.
+2. **Nome do Site:** `MeuSistema`
+3. **Caminho Físico:** `C:\apps\meu-sistema`
+4. **Porta:** `80` (ou outra de sua preferência).
+5. Selecione o **App Pool** criado no passo anterior.
 
 ---
 
-## 📈 15. Roadmap & Project Status 
+## 🔐 15. Permissões
 
-O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
-
-- [x]  **Phase 1 (2025.1):** Design (Figma), Modelagem de Dados (Diagramas ER) e Proposta de Valor
-- [x]  **Phase 2 (2025.2):** Desenvolvimento do Core (Back-end, Front-end e Integração com DB)
-- [ ]  **Phase 3 (2026.1):** PM Canvas, Plano de Projeto, Adição de bairros, Plano de Manutenção de Sistemas, EAP, Teste de Sistema, Dashboard, Correção de bugs no código, Correção do Pitch e Slide Final.  *(Status Atual 🛠️)*
-- [ ]  **Futuro:** Implementação de IA para análise de sentimento e Aplicativo Mobile nativo
+Na pasta `C:\apps\meu-sistema`:
+1. Botão direito > **Propriedades** > **Segurança**.
+2. Clique em **Editar** > **Adicionar**.
+3. Digite `IIS_IUSRS` e dê permissão de **Leitura e Execução**.
 
 ---
 
-## 🌐 16. Disponibilidade e Acesso
+## 🔄 16. Fazer o deploy (2 formas)
+
+### 🔹 OPÇÃO A — MANUAL (Mais simples)
+
+1. **No seu PC:** Gere os arquivos com `dotnet publish -c Release -o ./publish`.
+2. **Enviar arquivos:** Use RDP (Copiar/Colar), FTP ou WinSCP.
+3. **Destino:** Copie o conteúdo da pasta `publish/` local para `C:\apps\meu-sistema` no servidor.
+4. **Reiniciar o IIS:**
+```powershell
+iisreset
+```
+---
+
+### 🔹 OPÇÃO B — AUTOMÁTICO (GitHub Actions)
+
+Crie o arquivo `.github/workflows/deploy.yml` no seu projeto:
+
+```yaml
+name: Deploy .NET
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Publish
+      run: dotnet publish -c Release -o publish
+
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: publish
+```
+
+---
+
+## 🔐 17. Configurar Secrets no GitHub
+
+No seu repositório:
+1. Vá em **Settings** -> **Secrets and variables** -> **Actions**.
+2. Adicione as seguintes chaves:
+   - `FTP_SERVER`
+   - `FTP_USER`
+   - `FTP_PASSWORD`
+
+---
+
+## 🗄️ 18. Banco de Dados
+
+1. Instale o **SQL Server** ou utilize uma instância externa.
+2. Atualize a **Connection String** no `appsettings.Production.json`:
+
+```json
+"ConnectionStrings": {
+  "Default": "Server=IP_DO_SERVIDOR;Database=MEU_DB;User Id=usuario;Password=senha;"
+}
+```
+
+---
+
+## 🧪 19. Testar e Monitorar
+
+### Checklist de Testes:
+- [ ] Login e Autenticação
+- [ ] Cadastros (CRUD)
+- [ ] Integrações externas
+
+---
+
+### 📊 Logs
+Os logs de erro do IIS geralmente ficam em:
+`C:\inetpub\logs`
+*Dica: Você também pode configurar o Serilog ou o NLog no seu projeto para logs personalizados.*
+
+---
+
+## ⚠️ 20. Problemas Mais Comuns
+
+| Problema | Possível Causa | Solução |
+| :--- | :--- | :--- |
+| **Página não abre** | IIS parado ou Porta bloqueada | Verificar `iisreset` e Firewall. |
+| **Erro 500.19 / 500.21** | Falta o Hosting Bundle | Instale/Repare o .NET Hosting Bundle. |
+| **Erro de Permissão** | Falta de acesso na pasta | Verifique as permissões de `IIS_IUSRS`. |
+| **Banco não conecta** | Firewall ou Connection String | Liberar porta 1433 no servidor do banco. |
+
+---
+
+## 🌐 21. Disponibilidade e Acesso
 
 O **InfoBairro** é uma plataforma web de acesso público. Por se tratar de um sistema proprietário voltado à gestão urbana de Camaçari, o código-fonte reside em um repositório privado, enquanto a aplicação está disponível para uso da comunidade.
 
 ---
 
- ### 🔗16.1 Link de Acesso
+ ### 🔗21.1 Link de Acesso
 O sistema pode ser acessado através do link oficial:
 > **https://infobairro.com/**
 
 --- 
 
- ### 📱 16.2 Experiência do Usuário
+ ### 📱 21.2 Experiência do Usuário
 * **Web Responsiva:** Otimizado para navegadores Desktop e Mobile (Chrome, Edge, Safari).
 * **Sem Necessidade de Instalação:** Acesso direto via navegador, sem ocupar espaço no dispositivo.
 * **Mapa em Tempo Real:** Carregamento dinâmico de dados georreferenciados via infraestrutura Cloud.
 
 ---
 
-## 🛠️ 17. Infraestrutura e Deployment (Bastidores)
+## 🛠️ 22. Infraestrutura e Deployment (Bastidores)
 
 Embora o código seja privado, a arquitetura de publicação segue padrões modernos de escalabilidade:
 
@@ -665,7 +720,7 @@ Embora o código seja privado, a arquitetura de publicação segue padrões mode
 
 ---
 
-## 🧱 18. Arquitetura de Software
+## 🧱 23. Arquitetura de Software
 
 
 * **Padrão de arquitetura:** O sistema segue o padrao MVC com divisão clara de responsabilidades (Controllers, Models, Views).
@@ -678,7 +733,7 @@ Embora o código seja privado, a arquitetura de publicação segue padrões mode
 
 ---
   
-## 👥 19. Equipe e Engenharia de Software
+## 👥 24. Equipe e Engenharia de Software
 
 O **InfoBairro** é o resultado da colaboração estratégica entre especialistas em diferentes frentes de desenvolvimento.
 
