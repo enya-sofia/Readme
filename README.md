@@ -50,8 +50,7 @@ A estrutura do banco de dados é responsável por organizar as informações do 
 e permitir que eles se relacionam de de forma eficiente. A seguir, é apresentada a organização 
 e a relação entre as informações. 
 
-<br> 
-
+---
   ### 💡 4.1 Visão geral
   O banco de dados do InfoBairro segue o modelo relacional, onde as informações são organizadas em tabelas conectadas entre si.
 
@@ -60,7 +59,7 @@ e a relação entre as informações.
   - Bairros -> possuem informações e indicadores gerais
   - Avaliações -> representam a opinião dos urios sobre os bairros
 
-<br> 
+---
 
   ### 🧠 4.2 Analogia simples 
   
@@ -72,7 +71,8 @@ Funciona como um sistema de avaliações:
 
 Com isso, o sistema consegue transformar opiniões individuais em uma visão geral sobre cada bairro.
 
-<br> 
+----
+
 
   ### 🪢 4.3  Relacionamentos (DER)
 O modelo estabelece as seguintes relações entre as entidades:
@@ -95,6 +95,7 @@ O Diagrama Entidade-Relacionamento (DER) apresentado abaixo ilustra essas conex�
 
 <br> 
 
+---
  ### ⚠️ 4.4 Observação importante (regra do sistema)
 
 As notas não ficam armazenadas prontas na tabela de bairros. Elas são calculadas dinamicamente no sistema (backend).
@@ -116,7 +117,7 @@ A implantação do banco de dados do **InfoBairro** é realizada de forma automa
 
 O sistema utiliza **migrações automáticas** e, ao iniciar a aplicação, verifica se o banco já existe. Caso não exista, ele é criado automaticamente, juntamente com todas as tabelas e dados iniciais necessários.
 
-<br> 
+---
 
 ### 📌 5.1 Pré-requisitos
 
@@ -194,8 +195,7 @@ São criados automaticamente:
 
 Isso garante que o ambiente esteja pronto para uso logo após a primeira execução.
 
-
-<br> 
+---
 
  ### ✅ 5.2 Validação pós-implantação
 
@@ -217,8 +217,7 @@ Resultado esperado (exemplo):
 
 Também é recomendado validar a existência do usuário master e das roles iniciais.
 
-
-<br> 
+---
 
  ### 🔍 5.3 Teste de funcionamento
 
@@ -229,8 +228,7 @@ SELECT * FROM cidades;
 SELECT * FROM bairros;
 SELECT * FROM aspnetroles;
 ```
-
-<br> 
+---
 
  ### 🔄 5.4  Rollback / Limpeza
 
@@ -248,7 +246,7 @@ dotnet ef database update NomeMigrationAnterior
 DROP DATABASE infobairro;
 ```
 
-<br> 
+---
 
  ### 🛡️ 5.6 Observação técnica
 
@@ -270,8 +268,7 @@ Após a implantação do banco de dados, foi realizado um processo de validaçã
 
 Essa etapa é fundamental para assegurar que o ambiente está pronto para uso e que a aplicação consegue persistir e consultar informações sem inconsistências.
 
-
-<br> 
+---
 
  ### 🗄️ 6.1 Validação da Estrutura do Banco
 
@@ -282,6 +279,8 @@ Execute no MySQL / MariaDB:
 ```sql
 SHOW TABLES;
 ```
+
+---
 
  ### 📌 6.2 Resultado esperado
 
@@ -300,8 +299,7 @@ O banco deve conter, no mínimo, as seguintes tabelas principais:
 > 💡 As tabelas `aspnet*` são geradas automaticamente pelo [**ASP.NET](http://asp.net/) Identity**, responsável pelo sistema de autenticação e autorização.
 > 
 
-
-<br> 
+---
 
  ### 👤 6.3 Validação do Seed Inicial
 
@@ -320,6 +318,7 @@ Para validar, execute:
 SELECT * FROM aspnetroles;
 SELECT * FROM aspnetusers;
 ```
+---
 
  ### 📌 6.4 Verificar
 
@@ -333,8 +332,7 @@ Exemplo esperado:
 - `Moderador`
 - `Usuario`
 
-
-<br> 
+---
 
  ### 🔗 6.5 Validação de Integridade Referencial
 
@@ -348,6 +346,7 @@ SELECT * FROM bairros;
 SELECT * FROM avaliacoes;
 SELECT * FROM comentarios;
 ```
+---
 
  ### 📌 6.6 Conferir
 
@@ -357,12 +356,13 @@ SELECT * FROM comentarios;
 
 Essa etapa confirma que os relacionamentos definidos no `Context.cs` foram aplicados corretamente.
 
-
-<br> 
+---
 
  ### 🌐 6.7 Validação Funcional da Aplicação
 
 Após a validação estrutural, foram realizados testes diretamente na interface do sistema para comprovar a persistência dos dados.
+
+---
 
  ### 📌 6.8 Testes executados
 
@@ -381,9 +381,7 @@ Exemplo:
 SELECT * FROM avaliacoes;
 SELECT * FROM comentarios;
 ```
-
-
-<br> 
+---
 
  ### ⚡ 6.9 Validação de Regras de Negócio
 
@@ -402,9 +400,7 @@ SELECT * FROM comentariolikes;
 > 💡 O sistema possui índice único para impedir múltiplos likes do mesmo usuário no mesmo comentário.
 > 
 
-
-
-<br> 
+---
 
  ### 🛡️ 6.10 Evidência de Teste
 
@@ -416,7 +412,7 @@ A validação pós-implantação foi executada em ambiente local pela equipe ap�
 
 O rollback do banco pode ser realizado por meio das **migrations versionadas do Entity Framework Core**, garantindo reversão segura para versões anteriores da estrutura.
 
-<br>
+---
 
 ### ⏪ 7.1 Reverter para migration anterior
 
@@ -424,8 +420,7 @@ O rollback do banco pode ser realizado por meio das **migrations versionadas do 
 dotnet ef migrations list
 dotnet ef database update NomeMigrationAnterior
 ```
-
-<br>
+---
 
 ### 💾 7.2 Backup Preventivo (Recomendado)
 
@@ -446,6 +441,7 @@ mysql -u root -p infobairro < backup_infobairro.sql
 ## 🖥️ 8. Requisitos do Servidor
 
 Antes de realizar o deploy, o servidor deve atender aos seguintes requisitos mínimos:
+
 
 ### 🧩 Sistema Operacional
 
@@ -643,13 +639,13 @@ O projeto encontra-se atualmente em fase de **MVP (Mínimo Produto Viável)**.
 
 O **InfoBairro** é uma plataforma web de acesso público. Por se tratar de um sistema proprietário voltado à gestão urbana de Camaçari, o código-fonte reside em um repositório privado, enquanto a aplicação está disponível para uso da comunidade.
 
-<br> 
+---
 
  ### 🔗16.1 Link de Acesso
 O sistema pode ser acessado através do link oficial:
 > **https://infobairro.com/**
 
-<br> 
+--- 
 
  ### 📱 16.2 Experiência do Usuário
 * **Web Responsiva:** Otimizado para navegadores Desktop e Mobile (Chrome, Edge, Safari).
